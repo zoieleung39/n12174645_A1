@@ -26,7 +26,7 @@ const Items = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <ItmeForm
+      <ItemForm
         items={items}
         setItems={setItems}
         editingItem={editingItem}

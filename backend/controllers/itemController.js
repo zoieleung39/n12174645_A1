@@ -1,7 +1,5 @@
 const Item = require('../models/Item');
-const getItems = async (
-req,
-res) => {
+const getItems = async (req, res) => {
 try {
 const items = await Item.find({ userId: req.user.id });
 res.json(items);
@@ -10,21 +8,26 @@ res.status(500).json({ message: error.message });
 }
 };
 
-const addItem = async (
-req,
-res) => {
-const { title, description, deadline } = req.body;
-try {
-const item = await Item.create({ userId: req.user.id, title, description, deadline });
-res.status(201).json(item);
-} catch (error) {
-res.status(500).json({ message: error.message });
-}
+const addItem = async (req, res) => {
+  const { title, description, deadline } = req.body;
+  
+  console.log('=== ADD ITEM DEBUG ===');
+  console.log('Request body:', req.body);
+  console.log('User object:', req.user);
+  console.log('User ID:', req.user?.id);
+  
+  try {
+    const item = await Item.create({ userId: req.user.id, title, description, deadline });
+    console.log('Successfully created item:', item);
+    res.status(201).json(item);
+  } catch (error) {
+    console.error('Error in addItem:', error);
+    console.error('Error message:', error.message);
+    res.status(500).json({ message: error.message });
+  }
 };
 
-const updateItem = async (
-req,
-res) => {
+const updateItem = async (req, res) => {
 const { title, description, completed, deadline } = req.body;
 try {
 const item = await Item.findById(req.params.id);

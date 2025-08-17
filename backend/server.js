@@ -12,6 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/items', require('./routes/itemRoutes'));
 //app.use('/api/tasks', require('./routes/taskRoutes'));
 
 // Export the app object for testing
