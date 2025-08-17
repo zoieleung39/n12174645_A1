@@ -1,40 +1,40 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
-import TaskForm from '../components/TaskForm';
-import TaskList from '../components/TaskList';
+import ItemForm from '../components/ItemForm';
+import ItemList from '../components/ItemList';
 import { useAuth } from '../context/AuthContext';
 
-const Tasks = () => {
+const Items = () => {
   const { user } = useAuth();
-  const [tasks, setTasks] = useState([]);
-  const [editingTask, setEditingTask] = useState(null);
+  const [items, setItems] = useState([]);
+  const [editingItem, setEditingItem] = useState(null);
 
   useEffect(() => {
-    const fetchTasks = async () => {
+    const fetchItems = async () => {
       try {
-        const response = await axiosInstance.get('/api/tasks', {
+        const response = await axiosInstance.get('/api/items', {
           headers: { Authorization: `Bearer ${user.token}` },
         });
-        setTasks(response.data);
+        setItems(response.data);
       } catch (error) {
-        alert('Failed to fetch tasks.');
+        alert('Failed to fetch items.');
       }
     };
 
-    fetchTasks();
+    fetchItems();
   }, [user]);
 
   return (
     <div className="container mx-auto p-6">
-      <TaskForm
-        tasks={tasks}
-        setTasks={setTasks}
-        editingTask={editingTask}
-        setEditingTask={setEditingTask}
+      <ItmeForm
+        items={items}
+        setItems={setItems}
+        editingItem={editingItem}
+        setEditingItem={setEditingItem}
       />
-      <TaskList tasks={tasks} setTasks={setTasks} setEditingTask={setEditingTask} />
+      <ItemList items={items} setItems={setItems} setEditingItem={setEditingItem} />
     </div>
   );
 };
 
-export default Tasks;
+export default Items;
