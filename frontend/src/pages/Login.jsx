@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; 
 import axiosInstance from '../axiosConfig';
 
 const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({ studentNumber: '', password: '' });
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post('/api/auth/login', formData);
       
-      if (typeof onLogin === 'function') {
-        onLogin(response.data);
-      }
+      console.log('Login response:', response.data);
+      
+      // Use auth context login function
+      login(response.data);
       
       navigate('/items'); 
     } catch (error) {
