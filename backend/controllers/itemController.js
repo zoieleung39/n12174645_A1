@@ -3,7 +3,7 @@ const getItems = async (
 req,
 res) => {
 try {
-const items = await Items.find({ userId: req.user.id });
+const items = await Item.find({ userId: req.user.id });
 res.json(items);
 } catch (error) {
 res.status(500).json({ message: error.message });
