@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
 
-const Profile = () => {
-  const { user } = useAuth(); // Access user token from context
+const Profile = ({ user }) => {
   const [formData, setFormData] = useState({
     name: '',
+    studentNumber: '',
     email: '',
-    university: '',
-    address: '',
+    phone: '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -20,13 +18,15 @@ const Profile = () => {
         const response = await axiosInstance.get('/api/auth/profile', {
           headers: { Authorization: `Bearer ${user.token}` },
         });
+        
         setFormData({
-          name: response.data.name,
-          email: response.data.email,
-          university: response.data.university || '',
-          address: response.data.address || '',
+          name: response.data.name || '',
+          studentNumber: response.data.studentNumber || '',
+          email: response.data.email || '',
+          phone: response.data.phone || '',
         });
       } catch (error) {
+        console.error('Profile fetch error:', error);
         alert('Failed to fetch profile. Please try again.');
       } finally {
         setLoading(false);
@@ -40,12 +40,20 @@ const Profile = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axiosInstance.put('/api/auth/profile', formData, {
+      await axiosInstance.put('/api/auth/profile', {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone
+        // Note: studentNumber is not included as it cannot be changed
+      }, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
+      
       alert('Profile updated successfully!');
     } catch (error) {
-      alert('Failed to update profile. Please try again.');
+      console.error('Profile update error:', error);
+      const errorMessage = error.response?.data?.message || error.message;
+      alert(`Failed to update profile: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -57,40 +65,47 @@ const Profile = () => {
 
   return (
     <div className="max-w-md mx-auto mt-20">
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded">
+      <div className="bg-white p-6 shadow-md rounded">
         <h1 className="text-2xl font-bold mb-4 text-center">Your Profile</h1>
-        <input
-          type="text"
-          placeholder="Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <input
-          type="text"
-          placeholder="University"
-          value={formData.university}
-          onChange={(e) => setFormData({ ...formData, university: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <input
-          type="text"
-          placeholder="Address"
-          value={formData.address}
-          onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-          {loading ? 'Updating...' : 'Update Profile'}
-        </button>
-      </form>
+        <div>
+          <input
+            type="text"
+            placeholder="Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="w-full mb-4 p-2 border rounded"
+          />
+          <input
+            type="text"
+            placeholder="Student Number"
+            value={formData.studentNumber}
+            className="w-full mb-4 p-2 border rounded bg-gray-100"
+            disabled
+            title="Student number cannot be changed"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            className="w-full mb-4 p-2 border rounded"
+          />
+          <input
+            type="tel"
+            placeholder="Phone"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            className="w-full mb-4 p-2 border rounded"
+          />
+          <button 
+            onClick={handleSubmit}
+            disabled={loading}
+            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:bg-blue-400"
+          >
+            {loading ? 'Updating...' : 'Update Profile'}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
