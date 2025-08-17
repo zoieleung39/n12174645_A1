@@ -28,13 +28,16 @@ Project setup instructions:
         •	Users can only edit their own items and comments
         •	Safe platform for sharing item information
 
-    System Goals: The system aims to create a trusted digital platform where students can easily report lost items, help others by reporting found items, and communicate safely to reunite people with their belongings. By providing organized search tools and secure user management, the platform makes it simple for the campus community to help each other recover lost items.
+    System Goals: The system aims to create a trusted digital platform where students can easily 
+    report lost items, help others by reporting found items, and communicate safely to reunite people with their belongings. 
+    By providing organized search tools and secure user management, the platform makes it simple for the campus community 
+    to help each other recover lost items.
 
     Prerequisite: 
       Please install the following software and create account in following web tools:
         Nodejs [https://nodejs.org/en]
         Git [https://git-scm.com/]
-        VS code editor [https://code.visualstudio.com/]** **
+        VS code editor [https://code.visualstudio.com/]
         MongoDB Account [https://account.mongodb.com/account/login]
         GitHub Account [https://github.com/signup?source=login]
 
