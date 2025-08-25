@@ -29,9 +29,9 @@ Project setup instructions:
         •	Safe platform for sharing item information
 
     System Goals: The system aims to create a trusted digital platform where students can easily 
-    report lost items, help others by reporting found items, and communicate safely to reunite people with their belongings. 
-    By providing organized search tools and secure user management, the platform makes it simple for the campus community 
-    to help each other recover lost items.
+    report lost items, help others by reporting found items, and communicate safely to reunite 
+    people with their belongings. By providing organized search tools and secure user management, 
+    the platform makes it simple for the campus community to help each other recover lost items.
 
     Prerequisite: 
       Please install the following software and create account in following web tools:
@@ -47,5 +47,6 @@ http://13.211.134.86/
 
 -Provide a project-specific username and password if we need to
 access your dashboard:
+
 username: n12174645
 password: 0000
